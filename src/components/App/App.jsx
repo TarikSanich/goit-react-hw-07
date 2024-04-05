@@ -1,35 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import css from './App.module.css';
+import { useEffect } from 'react';
+import ContactForm from '../ContactForm/ContactForm';
+import ContactList from '../ContactList/ContactList';
+import SearchBox from '../SearchBox/SearchBox';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchContacts } from '../../redux/contactsOps.js';
+import { Toaster } from 'react-hot-toast';
+import Error from '../Error/Error.jsx';
+import Loader from '../Loader/Loader.jsx';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  // Отримання функції dispatch з Redux store
+  const dispatch = useDispatch();
+  const loading = useSelector(state => state.contacts.loading);
+  const error = useSelector(state => state.contacts.error);
+
+  useEffect(() => {
+    // запит (dispatch action) на сервер для отримання контактів.
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className={css.container}>
+      <Toaster />
+      <h1>Phonebook</h1>
+      <ContactForm />
+      <SearchBox />
+      {error && <Error errorMessage={`${error}`}> Error message: </Error>}
+      {loading && <Loader>Loading message</Loader>}
+      <ContactList />
+    </div>
+  );
 }
-
-export default App
