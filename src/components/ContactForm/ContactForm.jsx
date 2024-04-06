@@ -48,8 +48,8 @@ export default function ContactForm() {
           type="tel"
           name="number"
           id={numberFieldId}
-          pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}"
-          placeholder="123-45-67"
+          pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          placeholder="123-456-7890"
         />
         <ErrorMessage className={css.error} name="number" component="span" />
         <button className={css.btn} type="submit">

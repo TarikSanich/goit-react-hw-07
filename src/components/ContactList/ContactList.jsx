@@ -1,7 +1,7 @@
 import css from './ContactList.module.css';
 import Contact from '../Contact/Contact';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectVisibleContacts } from '../../redux/contactsSlice';
+import { selectFilteredContacts } from '../../redux/contactsSlice';
 import { deleteContact } from '../../redux/contactsOps';
 
 export default function ContactList() {
@@ -12,7 +12,7 @@ export default function ContactList() {
   };
 
 
-  const filteredContacts = useSelector(selectVisibleContacts);
+  const filteredContacts = useSelector(selectFilteredContacts);
 
   return (
     <div className={css.contactList}>
